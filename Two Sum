@@ -1,0 +1,33 @@
+# Two Sum – One-Pass Hash Map (C++17)
+
+> **Goal (paraphrased)**  
+> Given an array `nums` and an integer `target`, return the **two distinct indices** *i, j* such that `nums[i] + nums[j] == target`. Exactly one valid pair is guaranteed.
+
+---
+
+## Intuition
+
+* **Single scan → hash table.**  
+  Each time we visit `nums[i]`, we know the value that would complete the pair:
+
+  ```text
+  need = target – nums[i]
+
+
+
+class Solution {
+public:
+    vector<int> twoSum(const vector<int>& nums, int target) {
+        unordered_map<int, int> indexOf;
+        indexOf.reserve(nums.size());
+
+        for (size_t i = 0; i < nums.size(); ++i) {
+            int need = target - nums[i];
+            if (auto it = indexOf.find(need); it != indexOf.end()) {
+                return { static_cast<int>(it->second), static_cast<int>(i) };
+            }
+            indexOf[nums[i]] = static_cast<int>(i);
+        }
+    return {};
+    }
+};
